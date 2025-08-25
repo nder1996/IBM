@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="row login-container">
+    <mat-toolbar class="toolbar">
+      <span><img src="assets/ibm-logo-dark.svg" alt="IBM Logo" height="60"></span>
+    </mat-toolbar>
+    <div class="col-md-5 form-area mt-4" style="width: 600px !important;margin-left: 10rem;">
+      <div class="login-form">
+        <div class="heading">Log in to IBM</div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="mb-3 d-flex flex-column">
+            <label for="username" class="form-label">IBMid</label>
+            <mat-form-field>
+              <input matInput formControlName="username" placeholder="Enter your username">
+              <mat-error *ngIf="usernameControl?.errors?.['required']">IBMid is required</mat-error>
+              <mat-error *ngIf="usernameControl?.errors?.['minlength']">IBMid must be at least 3
+                characters</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="mb-3 d-flex flex-column">
+            <label for="password" class="form-label">Password</label>
+            <mat-form-field>
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'"
+                placeholder="Enter your password">
+              <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="passwordControl?.errors?.['required']">Password is required</mat-error>
+              <mat-error *ngIf="passwordControl?.errors?.['minlength']">Password must be at least 6
+                characters</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="d-grid gap-2 mt-4 mb-4 align-items-start">
+            <button type="submit" mat-flat-button
+              class="custom-button custom-button-login w-100 d-flex align-items-center justify-content-between">
+              <span style="order: 1;">Continue</span>
+              <mat-icon style="order: 0;">arrow_forward</mat-icon>
+            </button>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="register-text">
+            <p>Don't have an account?</p>
+            <div class="d-grid gap-2 mt-4 mb-4 align-items-start">
+              <button type="submit" mat-flat-button
+                class="custom-button custom-button-register w-100 d-flex align-items-center justify-content-between">
+                <span>Create an IBMid</span>
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <p class="help-link">
+            Forgot IBMid? <a href="#" target="_blank">Contact the IBMid help desk</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right side - Background Image -->
+    <div class="col-md-7 image-panel d-none d-md-block"></div>
+  </div>
+</div>

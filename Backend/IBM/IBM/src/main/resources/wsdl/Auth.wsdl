@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BackendWsService"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:tns="http://example.com/sample"
+  targetNamespace="http://example.com/sample">
+  
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://example.com/sample">
+      <!-- wrapper element of the request message -->
+      <xsd:element name="backend" type="tns:backend"/>
+      
+      <!-- wrapper element of the response message -->
+      <xsd:element name="backendResponse" type="tns:backendResponse"/>
+      
+      <!-- wrapper element of the fault message -->
+      <xsd:element name="UserDefinedFault" type="tns:UserDefinedFault"/>
+      
+      <!-- Type referenced by the wrapper element of the request message -->
+      <xsd:complexType name="backend">
+        <xsd:sequence>
+          <xsd:element name="user" type="xsd:string"/>
+          <xsd:element name="password" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      
+      <!-- Type referenced by the wrapper element of the response message -->
+      <xsd:complexType name="backendResponse">
+        <xsd:sequence>
+          <xsd:element name="resultCode" type="xsd:int"/>
+		  <xsd:element name="firstName" type="xsd:string"/>
+		  <xsd:element name="lastName" type="xsd:string"/>
+		  <xsd:element name="age" type="xsd:int"/>
+		  <xsd:element name="profilePhoto" type="xsd:string"/>
+		  <xsd:element name="video" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      
+      <!-- Type referenced by the wrapper element of the fault message -->
+      <xsd:complexType name="UserDefinedFault">
+        <xsd:sequence>
+          <xsd:element name="additionalInfo" type="xsd:int"/>
+          <xsd:element name="detail" type="xsd:string"/>
+          <xsd:element name="message" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+ 
+  <!-- Request message -->
+  <wsdl:message name="backendRequest">
+    <wsdl:part name="inputParameters" element="tns:backend"/>
+  </wsdl:message>
+  <!-- Response message -->
+  <wsdl:message name="backendResponse">
+    <wsdl:part name="outputParameters" element="tns:backendResponse"/>
+  </wsdl:message>
+ 
+  <!-- Fault message -->
+  <wsdl:message name="UserDefinedException">
+    <wsdl:part name="fault" element="tns:UserDefinedFault"/>
+  </wsdl:message>
+ 
+  <!-- Port type -->
+  <wsdl:portType name="BackendWs">
+    <!-- Operation -->
+    <wsdl:operation name="backend">
+      <wsdl:input message="tns:backendRequest"/>
+      <wsdl:output message="tns:backendResponse"/>
+      <wsdl:fault name="UserDefinedFault" 
+        message="tns:UserDefinedException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!-- Binding (SOAP 1.2/HTTP binding) -->
+  <wsdl:binding name="backendBinding" type="tns:BackendWs">
+    <!-- document/literal/wrapped -->
+    <soap12:binding style="document" transport="http://www.w3.org/2003/05/soap/bindings/HTTP/"/>
+    <!-- Operation -->
+    <wsdl:operation name="backend">
+      <soap12:operation/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="UserDefinedFault">
+        <soap12:fault name="UserDefinedFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!-- Service -->
+  <wsdl:service name="BackendWsService">
+    <!-- Port -->
+    <wsdl:port name="backend" binding="tns:backendBinding">
+      <soap12:address location="http://localhost:8080/mock/auth"/>
+    </wsdl:port>
+  </wsdl:service>
+ 
+</wsdl:definitions>

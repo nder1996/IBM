@@ -1,0 +1,58 @@
+:root {
+  --ibm-blue: #0f62fe;
+  --ibm-purple: #8a3ffc;
+  --ibm-gradient: linear-gradient(135deg, #0f62fe 0%, #8a3ffc 100%);
+}
+
+.container-principal {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: #f8f9fa;
+  height: 100vh !important;
+}
+
+.ibm-gradient {
+  background: var(--ibm-gradient);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border: 3px solid white;
+  background-color: #e9ecef;
+  object-fit: cover;
+}
+
+.video-thumbnail {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.no-hover-btn {
+  color: #000000 !important;
+  font-weight: bold;
+  border: 1px solid #000000 !important;
+  background-color: transparent !important;
+}
+
+.no-hover-btn:hover,
+.no-hover-btn:active,
+.no-hover-btn:focus {
+  color: #006699 !important;
+  background-color: transparent !important;
+  border-color: #006699 !important;
+  box-shadow: none !important;
+}
+
+.logout-icon {
+  font-size: 16px;
+  vertical-align: text-bottom;
+}
+
+.ibm-header {
+  background-color: #006699;
+}
+
+
+.card-body{
+  padding: 1.5rem !important;
+}

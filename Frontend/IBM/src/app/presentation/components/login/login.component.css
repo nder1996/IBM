@@ -1,0 +1,131 @@
+.toolbar {
+  background-color: transparent !important;
+  border-bottom: 1px solid #e8e4e4;
+}
+
+.toolbar span{
+  margin-left: 11rem;
+}
+
+
+.login-container {
+  min-height: 100vh;
+}
+
+.form-area {
+  padding: 2rem;
+}
+
+.heading {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  color: #525252;
+}
+
+.form-control {
+  border-radius: 0;
+  padding: 0.75rem;
+  height: 48px;
+}
+
+.btn-primary {
+  background-color: #0f62fe;
+  border: none;
+  border-radius: 0;
+  padding: 0.75rem 1rem;
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-tertiary {
+  color: #0f62fe;
+  background-color: transparent;
+  border: 1px solid #0f62fe;
+  border-radius: 0;
+  padding: 0.75rem 1rem;
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remember-me-wrapper {
+  margin: 1rem 0;
+}
+
+.register-text {
+  margin: 2rem 0 1rem 0;
+}
+
+.help-link {
+  margin-top: 1rem;
+}
+
+.help-link a {
+  color: #0f62fe;
+  text-decoration: none;
+}
+
+.help-link a:hover {
+  text-decoration: underline;
+}
+
+.image-panel {
+  background-image: url('https://www.ibm.com/account/ibmidutil/login-ui/img/illustration-final.svg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.info-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #6f6f6f;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
+  margin-left: 4px;
+  color: #6f6f6f;
+}
+
+.custom-button-register {
+  height: 48px;
+  padding: 0 16px;
+  background-color: transparent;
+  color: #0066FF !important;
+  border: 1px solid #0066FF !important;
+}
+
+.custom-button-register:hover {
+  background-color: rgba(0, 102, 255, 0.04) !important;
+}
+
+.custom-button-login {
+  background-color: #0f62fe !important;
+  color: #fff !important;
+
+}
+
+.custom-button:hover {
+  background-color: rgba(0, 102, 255, 0.04) !important;
+}
+
+.custom-button {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 65px !important;
+  padding: 1rem !important;
+  /*border: 1px solid transparent !important;*/
+}
