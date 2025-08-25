@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
+    @JsonProperty("token")
     private TokenInfo token;
     @JsonProperty("user_information")
     private SoapData userInformation;

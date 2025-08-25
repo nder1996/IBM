@@ -28,19 +28,27 @@ public class FileLoggingService {
     }
 
     public void writeTransactionStart(String transactionId, String method, String uri, String ip, Map<String, String[]> parameters, Map<String, String> headers) {
-        StringBuilder message = new StringBuilder();
-        message.append(String.format("🚀 START | %s %s | IP: %s", method, uri, ip));
-        message.append("\nParameters: ").append(parameters);
-        message.append("\nHeaders: ").append(headers);
-        writeTransactionLog(transactionId, message.toString());
+        try {
+            StringBuilder message = new StringBuilder();
+            message.append(String.format("🚀 START | %s %s | IP: %s", method, uri, ip));
+            message.append("\nParameters: ").append(parameters);
+            message.append("\nHeaders: ").append(headers);
+            writeTransactionLog(transactionId, message.toString());
+        } catch (Exception e) {
+            System.err.println("❌ Error en writeTransactionStart: " + e.getMessage());
+        }
     }
 
     public void writeTransactionEnd(String transactionId, int status, long duration, String user, String responseBody, Map<String, String> responseHeaders) {
-        String icon = status >= 400 ? "❌" : "✅";
-        StringBuilder message = new StringBuilder();
-        message.append(String.format("%s END | Status: %d | Duration: %dms | User: %s", icon, status, duration, user));
-        message.append("\nResponse Body: ").append(responseBody);
-        message.append("\nResponse Headers: ").append(responseHeaders);
-        writeTransactionLog(transactionId, message.toString());
+        try {
+            String icon = status >= 400 ? "❌" : "✅";
+            StringBuilder message = new StringBuilder();
+            message.append(String.format("%s END | Status: %d | Duration: %dms | User: %s", icon, status, duration, user));
+            message.append("\nResponse Body: ").append(responseBody);
+            message.append("\nResponse Headers: ").append(responseHeaders);
+            writeTransactionLog(transactionId, message.toString());
+        } catch (Exception e) {
+            System.err.println("❌ Error en writeTransactionEnd: " + e.getMessage());
+        }
     }
 }

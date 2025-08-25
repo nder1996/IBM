@@ -45,18 +45,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SoapAuthenticationException.class)
     public ResponseEntity<Object> handleSoapAuthenticationException(SoapAuthenticationException ex, org.springframework.web.context.request.WebRequest request) {
         Map<String, Object> response = new HashMap<>();
-        response.put("error", ex.getMessage());
+        response.put("error", "Error de autenticación");
         response.put("data", null);
 
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleAllExceptions(Exception ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("error", ex.getMessage());
-        response.put("data", null);
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -69,4 +61,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleAllExceptions(Exception ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "Ha ocurrido un error en el servidor");
+        response.put("data", null);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

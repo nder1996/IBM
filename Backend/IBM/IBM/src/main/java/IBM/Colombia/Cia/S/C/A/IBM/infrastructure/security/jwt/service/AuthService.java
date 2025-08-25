@@ -21,27 +21,35 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-
     public AuthResponse login(JwtRequest request) {
+        // Obtener respuesta mock del servicio SOAP
         BackendResponse soapResp = authSoapClient.authenticate(request.getUsername(), request.getPassword());
+
+        // Validar el código de respuesta
         if (soapResp.getResultCode() != 200) {
             throw new SoapAuthenticationException("Autenticación SOAP fallida: código " + soapResp.getResultCode());
         }
+
+        // Crear UserDetails simplemente con el username y roles
         UserDetails userDetails = User.withUsername(request.getUsername())
-            .password("")
-            .authorities("USER")
-            .build();
+                .password("") // No necesitamos almacenar la contraseña
+                .authorities("USER")
+                .build();
+
+        // Generar token JWT
         String token = jwtTokenUtil.generateToken(userDetails);
+
+        // Construir y devolver la respuesta
         return new AuthResponse(
-            new AuthResponse.TokenInfo(token, "Bearer"),
-            new AuthResponse.SoapData(
-                soapResp.getResultCode(),
-                soapResp.getFirstName(),
-                soapResp.getLastName(),
-                soapResp.getAge(),
-                soapResp.getProfilePhoto(),
-                soapResp.getVideo()
-            )
+                new AuthResponse.TokenInfo(token, "Bearer"),
+                new AuthResponse.SoapData(
+                        soapResp.getResultCode(),
+                        soapResp.getFirstName(),
+                        soapResp.getLastName(),
+                        soapResp.getAge(),
+                        soapResp.getProfilePhoto(),
+                        soapResp.getVideo()
+                )
         );
     }
 }

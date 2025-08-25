@@ -17,8 +17,8 @@ public class ImageBase64Service {
                 return "data:image/jpeg;base64," + base64;
             }
         } catch (IOException e) {
-            return "";
+            System.err.println("Error al leer el recurso de imagen: " + resourcePath + " - " + e.getMessage());
+            return null;
         }
     }
 }
-

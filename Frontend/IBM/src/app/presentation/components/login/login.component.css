@@ -115,11 +115,11 @@
 .custom-button-login {
   background-color: #0f62fe !important;
   color: #fff !important;
-
 }
 
-.custom-button:hover {
-  background-color: rgba(0, 102, 255, 0.04) !important;
+.custom-button-login:hover {
+  background-color: #0f62fe !important;
+  color: #fff !important;
 }
 
 .custom-button {
@@ -128,4 +128,9 @@
   height: 65px !important;
   padding: 1rem !important;
   /*border: 1px solid transparent !important;*/
+}
+
+/* Eliminamos la regla genérica de hover para que no afecte al botón de login */
+.custom-button-register:hover {
+  background-color: rgba(0, 102, 255, 0.04) !important;
 }
