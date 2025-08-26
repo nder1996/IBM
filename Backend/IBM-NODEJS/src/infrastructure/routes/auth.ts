@@ -5,7 +5,7 @@ import { AuthRequest } from '../../application/dto/request/AuthRequest';
 
 const router = Router();
 
-// Endpoint de autenticación con validación de DTO
+
 router.post('/login', validateDto(AuthRequest), AuthController.login);
 
 export default router;

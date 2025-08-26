@@ -7,7 +7,7 @@ import { AuthResponse, TokenInfo, SoapData } from "../../../../application/dto/r
 import { ImageBase64Service } from "../../../../application/services/ImageBase64Service";
 import { BadRequestError, ResourceNotFoundError } from "../../../../infrastructure/exception/ApplicationError";
 import { Service } from "../../../aspect/LoggingAspect";
-import userRepository from "../../../database/UserRepository";
+import userRepository from "../../../../domain/repositories/UserRepository";
 
 /**
  * Servicio de autenticación con AOP aplicado

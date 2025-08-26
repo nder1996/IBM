@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 
-/**
- * Decorador mejorado que maneja tanto métodos síncronos como asíncronos
- */
+
 export function LogMethod() {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
@@ -43,9 +41,7 @@ export function LogMethod() {
     };
 }
 
-/**
- * Decorador para aplicar logging a toda una clase
- */
+
 export function LogClass() {
     return function <T extends { new (...args: any[]): {} }>(constructor: T) {
         const propertyNames = Object.getOwnPropertyNames(constructor.prototype);
@@ -64,7 +60,7 @@ export function LogClass() {
     };
 }
 
-// Decoradores específicos
+
 export const Service = () => LogClass();
 export const Controller = () => LogClass();
 export const Repository = () => LogClass();

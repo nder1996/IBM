@@ -19,16 +19,15 @@ interface ApiResponse<T = any> {
 }
 
 function apiResponseMiddleware(req: Request, res: Response, next: NextFunction) {
-    // Preserve the original res.json method
     const originalJson = res.json.bind(res);
 
     res.json = (body?: any): Response => {
-        // Si es una ruta de autenticación, imprimir el cuerpo antes de envolverlo
+
         if (req.path.includes('/auth/login')) {
             console.log('Body antes de envolver (auth):', JSON.stringify(body, null, 2));
         }
         
-        // If the response is already wrapped, do not wrap again
+
         if (body && body.meta && (body.data !== undefined || body.error !== undefined)) {
             return originalJson(body);
         }
@@ -49,10 +48,9 @@ function apiResponseMiddleware(req: Request, res: Response, next: NextFunction) 
             apiResponse.error = body;
         } else {
             apiResponse.data = body;
-            apiResponse.error = null; // Agregar siempre error: null en respuestas exitosas
+            apiResponse.error = null; 
         }
         
-        // Si es una ruta de autenticación, imprimir el cuerpo después de envolverlo
         if (req.path.includes('/auth/login')) {
             console.log('ApiResponse después de envolver (auth):', JSON.stringify(apiResponse, null, 2));
         }

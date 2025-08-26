@@ -1,14 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-/**
- * Servicio para gestionar logs con iconos
- */
+
 export class LoggingService {
     private static instance: LoggingService;
     private logFilePath: string;
 
-    // Iconos para los diferentes tipos de logs
+
     private static readonly ICONS = {
         INFO: '🔵 ',
         SUCCESS: '✅ ',
@@ -28,21 +26,20 @@ export class LoggingService {
     };
 
     private constructor() {
-        // Crear directorio de logs si no existe
+     
         const logsDir = path.join(process.cwd(), 'resources', 'logs');
         if (!fs.existsSync(logsDir)) {
             fs.mkdirSync(logsDir, { recursive: true });
         }
         
-        // Definir ruta del archivo de logs con fecha actual
+    
         const date = new Date();
         const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
         this.logFilePath = path.join(logsDir, `auth-${formattedDate}.log`);
     }
 
-    /**
-     * Obtener la instancia del servicio de logs (patrón Singleton)
-     */
+
+
     public static getInstance(): LoggingService {
         if (!LoggingService.instance) {
             LoggingService.instance = new LoggingService();
@@ -50,18 +47,17 @@ export class LoggingService {
         return LoggingService.instance;
     }
 
-    /**
-     * Registra un mensaje de log con el icono correspondiente
-     */
+   
+
     private log(type: keyof typeof LoggingService.ICONS, message: string, details?: any): void {
         const timestamp = new Date().toISOString();
         const icon = LoggingService.ICONS[type] || LoggingService.ICONS.INFO;
         
         let logMessage = `${icon} [${timestamp}] ${message}`;
         
-        // Agregar detalles si existen
+     
         if (details) {
-            // Si es un error, extraer el mensaje y la pila
+
             if (details instanceof Error) {
                 logMessage += `\n    Mensaje: ${details.message}`;
                 if (details.stack) {
@@ -75,14 +71,13 @@ export class LoggingService {
             }
         }
         
-        // Escribir en archivo
+
         fs.appendFileSync(this.logFilePath, logMessage + '\n\n');
         
-        // No imprimir en consola para evitar saturación
+
     }
 
-    // Métodos públicos para diferentes tipos de logs
-    
+
     public logAuthRequest(username: string): void {
         this.log('REQUEST', `Solicitud de autenticación recibida`, { username });
     }

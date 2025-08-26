@@ -2,9 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ApplicationError } from '../exception/ApplicationError';
 import { ValidationError } from 'class-validator';
 
-/**
- * Middleware para manejar excepciones globales
- */
+
 export function globalErrorHandler(
   err: Error | ApplicationError | ValidationError[],
   req: Request,
@@ -13,7 +11,7 @@ export function globalErrorHandler(
 ) {
 
 
-  // Manejar errores de validación de class-validator
+
   if (Array.isArray(err) && err.length > 0 && err[0] instanceof ValidationError) {
     const validationErrors = err as ValidationError[];
     const errors = validationErrors.map(error => {
@@ -39,7 +37,7 @@ export function globalErrorHandler(
     });
   }
 
-  // Manejar errores de aplicación
+
   if (err instanceof ApplicationError) {
     return res.status(err.statusCode).json({
       meta: {
@@ -55,7 +53,7 @@ export function globalErrorHandler(
     });
   }
 
-  // Manejar errores genéricos
+
   return res.status(500).json({
     meta: {
       message: 'Error interno del servidor',

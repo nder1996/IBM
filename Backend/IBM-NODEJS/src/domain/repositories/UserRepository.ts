@@ -1,11 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { Repository, Timed } from '../aspect/LoggingAspect';
+import { Repository, Timed } from '../../infrastructure/aspect/LoggingAspect';
 
-/**
- * Repositorio de usuarios con AOP aplicado
- * Utiliza el decorador @Repository para interceptar automáticamente todas las operaciones
- */
+
 @Repository()
 export class UserRepository {
     private usersFilePath: string;
@@ -14,9 +11,7 @@ export class UserRepository {
         this.usersFilePath = path.join(process.cwd(), 'src', 'infrastructure', 'resources', 'properties', 'users.json');
     }
     
-    /**
-     * Busca un usuario por nombre de usuario
-     */
+    
     public async findByUsername(username: string): Promise<any> {
         try {
             const users = await this.loadUsers();
@@ -30,10 +25,7 @@ export class UserRepository {
         }
     }
     
-    /**
-     * Lista todos los usuarios
-     * Utiliza el decorador @Timed para medir específicamente el rendimiento
-     */
+
     @Timed()
     public async findAll(): Promise<any[]> {
         try {
@@ -44,9 +36,7 @@ export class UserRepository {
         }
     }
     
-    /**
-     * Carga los usuarios desde el archivo JSON
-     */
+  
     private async loadUsers(): Promise<any[]> {
         try {
             const data = await fs.promises.readFile(this.usersFilePath, 'utf8');
@@ -59,5 +49,5 @@ export class UserRepository {
     }
 }
 
-// Exportar una instancia por defecto
+
 export default new UserRepository();
