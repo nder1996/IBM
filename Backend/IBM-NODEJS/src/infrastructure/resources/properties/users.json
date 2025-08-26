@@ -1,0 +1,81 @@
+{
+  "users": [
+    {
+      "username": "juan.perez",
+      "response": {
+        "resultCode": 200,
+        "firstName": "Juan",
+        "lastName": "Pérez",
+        "age": 25,
+        "profilePhoto": "/resources/images/avatar_1.png",
+        "video": "https://youtube.com/shorts/OplrL_DT7bM?si=RqfilkcZrkCLsV9e"
+      }
+    },
+    {
+      "username": "maria.gonzalez",
+      "response": {
+        "resultCode": 200,
+        "firstName": "María",
+        "lastName": "González",
+        "age": 30,
+        "profilePhoto": "/resources/images/avatar_2.png",
+        "video": "https://www.youtube.com/shorts/4CYkhXIDxeQ?feature=share"
+      }
+    },
+    {
+      "username": "carlos.rodriguez",
+      "response": {
+        "resultCode": 200,
+        "firstName": "Carlos",
+        "lastName": "Rodríguez",
+        "age": 28,
+        "profilePhoto": "/resources/images/avatar_3.png",
+        "video": "https://youtube.com/shorts/3dx1dBzM7ZY?si=fRN0Cl2b9SEU5BQx"
+      }
+    },
+    {
+      "username": "ana.martinez",
+      "response": {
+        "resultCode": 200,
+        "firstName": "Ana",
+        "lastName": "Martínez",
+        "age": 35,
+        "profilePhoto": "/resources/images/avatar_4.png",
+        "video": "https://youtube.com/shorts/MiWzebtC_Zo?si=R22s2fk9S2q-2AIs"
+      }
+    },
+    {
+      "username": "luis.fernandez",
+      "response": {
+        "resultCode": 200,
+        "firstName": "Luis",
+        "lastName": "Fernández",
+        "age": 42,
+        "profilePhoto": "/resources/images/avatar_5.png",
+        "video": "9bZkp7q19f0"
+      }
+    },
+    {
+      "username": "invalid_user",
+      "response": {
+        "resultCode": 401,
+        "firstName": "Usuario",
+        "lastName": "No Encontrado",
+        "age": 0,
+        "profilePhoto": "",
+        "video": "Usuario no encontrado en el sistema."
+      }
+    },
+    {
+      "username": "error_case",
+      "response": {
+        "resultCode": 500,
+        "firstName": "Error",
+        "lastName": "Sistema",
+        "age": 0,
+        "profilePhoto": "",
+        "video": "SYSTEM ERROR"
+      }
+    }
+  ]
+}
