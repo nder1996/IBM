@@ -62,7 +62,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {},
           "configurations": {
+            "api1": {
+              "proxyConfig": "proxy.api1.conf.json",
+              "browserTarget": "IBM:build:development"
+            },
+            "api2": {
+              "proxyConfig": "proxy.api2.conf.json",
+              "browserTarget": "IBM:build:development"
+            },
             "production": {
               "browserTarget": "IBM:build:production"
             },
