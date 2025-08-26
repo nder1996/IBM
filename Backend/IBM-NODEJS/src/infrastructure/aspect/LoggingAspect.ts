@@ -8,8 +8,39 @@ export function LogMethod() {
         descriptor.value = function (...args: any[]) {
             const className = target.constructor.name;
             const methodName = propertyKey;
+            // Extraer ID de transacción del contexto si existe (como en req.transactionId)
+            let txnId = '';
+            let transactionIdValue = '';
             
-            console.log(`🚀 ${className}.${methodName} - INICIANDO`);
+            // Verificar si alguno de los argumentos es un objeto de solicitud con transactionId
+            if (args && args.length > 0) {
+                for (const arg of args) {
+                    if (arg && typeof arg === 'object' && arg.transactionId) {
+                        transactionIdValue = arg.transactionId;
+                        txnId = `🏷️ TXN[${transactionIdValue}] `;
+                        break;
+                    }
+                }
+            }
+            
+            // Si no hay ID de transacción, crear uno nuevo
+            if (!transactionIdValue) {
+                transactionIdValue = `TXN-${Math.random().toString(16).substring(2, 10).toUpperCase()}`;
+                txnId = `🏷️ TXN[${transactionIdValue}] `;
+                
+                // Intentar asignar el ID de transacción al objeto de solicitud si existe
+                if (args && args.length > 0) {
+                    for (const arg of args) {
+                        if (arg && typeof arg === 'object' && 
+                            (arg.url || arg.method || arg.path || arg.headers)) {
+                            arg.transactionId = transactionIdValue;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            console.log(`🚀 ${txnId}${className}.${methodName} - INICIANDO`);
             
             try {
                 const result = originalMethod.apply(this, args);
@@ -19,20 +50,20 @@ export function LogMethod() {
                     // Método asíncrono - manejar con .then()
                     return result
                         .then((resolvedResult: any) => {
-                            console.log(`✅ ${className}.${methodName} - COMPLETADO (ASYNC)`);
+                            console.log(`✅ ${txnId}${className}.${methodName} - COMPLETADO (ASYNC)`);
                             return resolvedResult;
                         })
                         .catch((error: any) => {
-                            console.error(`❌ ${className}.${methodName} - ERROR (ASYNC):`, error);
+                            console.error(`❌ ${txnId}${className}.${methodName} - ERROR (ASYNC):`, error);
                             throw error;
                         });
                 } else {
                     // Método síncrono - retornar directamente
-                    console.log(`✅ ${className}.${methodName} - COMPLETADO (SYNC)`);
+                    console.log(`✅ ${txnId}${className}.${methodName} - COMPLETADO (SYNC)`);
                     return result;
                 }
             } catch (error) {
-                console.error(`❌ ${className}.${methodName} - ERROR (SYNC):`, error);
+                console.error(`❌ ${txnId}${className}.${methodName} - ERROR (SYNC):`, error);
                 throw error;
             }
         };
