@@ -42,8 +42,9 @@
           <div class="register-text">
             <p>Don't have an account?</p>
             <div class="d-grid gap-2 mt-4 mb-4 align-items-start">
-              <button type="submit" mat-flat-button
-                class="custom-button custom-button-register w-100 d-flex align-items-center justify-content-between">
+              <button mat-flat-button
+                class="custom-button custom-button-register w-100 d-flex align-items-center justify-content-between"
+                (click)="$event.preventDefault()">
                 <span>Create an IBMid</span>
                 <mat-icon>arrow_forward</mat-icon>
               </button>
@@ -59,5 +60,12 @@
 
     <!-- Right side - Background Image -->
     <div class="col-md-7 image-panel d-none d-md-block"></div>
+  </div>
+
+  <div class="notification-buttons">
+    <button mat-raised-button color="primary" (click)="showSuccessNotification()">Mostrar Éxito</button>
+    <button mat-raised-button color="warn" (click)="showErrorNotification()">Mostrar Error</button>
+    <button mat-raised-button color="accent" (click)="showWarningNotification()">Mostrar Advertencia</button>
+    <button mat-raised-button color="primary" (click)="showInfoNotification()">Mostrar Información</button>
   </div>
 </div>

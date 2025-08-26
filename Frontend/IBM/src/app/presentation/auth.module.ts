@@ -13,13 +13,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatDividerModule} from '@angular/material/divider';
+import { NotificationComponent } from './components/notification/notification.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     LoginFailedComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
