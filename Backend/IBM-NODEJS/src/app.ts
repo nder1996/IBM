@@ -1,51 +1,83 @@
+// src/app.ts - VERSIÓN CON SISTEMA AOP SIMPLIFICADO
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import 'reflect-metadata'; // Importar reflect-metadata para habilitar decoradores
+import 'reflect-metadata';
 
-// Importar el sistema AOP completo
-import './infrastructure/aspect';
+// ✅ IMPORTAR SISTEMA AOP SIMPLIFICADO
+import './infrastructure/aspect/SimpleLoggingAspect';
 
 import apiResponseMiddleware from './infrastructure/middleware/ApiResponseMiddleware';
 import { globalErrorHandler } from './infrastructure/middleware/GlobalErrorMiddleware';
-import transactionLoggingMiddleware from './infrastructure/middleware/TransactionLoggingMiddleware';
+// ✅ IMPORTAR MIDDLEWARE SIMPLIFICADO
+import { simpleLoggingMiddleware } from './infrastructure/middleware/SimpleLoggingMiddleware';
 import router from './infrastructure/routes/index';
 
-// Crear una instancia de Express
+// Crear instancia de Express
 const app = express();
-
-// Configurar el puerto, usando la variable de entorno o el 3000 por defecto
 const port = process.env.PORT || 3000;
 
-// Middleware para parsear JSON
+// =======================================
+// CONFIGURACIÓN DE MIDDLEWARES
+// =======================================
+
+// Parseo de JSON
 app.use(express.json());
 
-// Configuración global de CORS (puedes personalizar el origen)
-app.use(cors({ origin: 'http://localhost:3000', methods: ['GET', 'POST', 'PUT', 'DELETE'], credentials: true }));
+// CORS
+app.use(cors({ 
+    origin: 'http://localhost:3000', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true 
+}));
 
-// Aplicar middleware para logging de transacciones
-app.use(transactionLoggingMiddleware);
+// ✅ APLICAR MIDDLEWARE DE LOGGING SIMPLIFICADO
+app.use(simpleLoggingMiddleware);
 
-// Aplicar middleware de respuesta estandarizada para todas las rutas
-app.use(apiResponseMiddleware); // Usar la referencia directamente, no llamar como función
+// Estandarización de respuestas API
+app.use(apiResponseMiddleware);
 
-// Configurar middleware para servir archivos estáticos
-app.use('/resources', express.static('resources')); // Servir archivos desde la carpeta resources en la raíz
-app.use('/resources', express.static('src/infrastructure/resources')); // Servir archivos desde la carpeta resources en src
+// =======================================
+// CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS
+// =======================================
+app.use('/resources', express.static('resources'));
+app.use('/resources', express.static('src/infrastructure/resources'));
 
-// Usar el router para manejar los endpoints
+// =======================================
+// CONFIGURACIÓN DE RUTAS
+// =======================================
 app.use('/api', router);
 
-// Definir rutas; por ejemplo, una ruta raíz
+// Ruta raíz
 app.get('/', (_req: Request, res: Response) => {
-  res.send('Bienvenido a IBM-NODEJS!');
+  res.json({ 
+    message: '🚀 IBM-NODEJS con Sistema AOP Simplificado!',
+    version: '2.0-simplified',
+    endpoints: {
+      auth: '/api/auth/login',
+      protected: '/api/protected',
+      public: '/api/public'
+    }
+  });
 });
 
-// Registrar el middleware global de manejo de errores (debe ser después de todas las rutas)
+// =======================================
+// MANEJO GLOBAL DE ERRORES
+// =======================================
 app.use(globalErrorHandler);
 
-// Iniciar el servidor
+// =======================================
+// INICIALIZACIÓN DEL SERVIDOR
+// =======================================
 app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
+  console.log('');
+  console.log('🌟=============================================🌟');
+  console.log('🚀            IBM-NODEJS INICIADO             🚀');
+  console.log('🌟=============================================🌟');
+  console.log(`📡 Puerto: ${port}`);
+  console.log(`🌐 URL: http://localhost:${port}`);
+  console.log(`🔐 Login: POST http://localhost:${port}/api/auth/login`);
+  console.log(`📋 Usuarios disponibles en: users.json`);
+  console.log('📊 Logging automático: ✅ HABILITADO');
+  console.log('🌟=============================================🌟');
+  console.log('');
 });
-
-// ... Módulos adicionales y configuración según se requiera ...

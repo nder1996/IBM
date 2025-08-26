@@ -1,24 +1,50 @@
 export class AuthResponse {
+    token: TokenInfo;
+    user_information: SoapData;
+
     constructor(
-        public token?: TokenInfo,
-        public user_information?: SoapData
-    ) {}
+        token: TokenInfo,
+        user_information: SoapData
+    ) {
+        this.token = token;
+        this.user_information = user_information;
+    }
 }
 
 export class TokenInfo {
+    token: string;
+    type: string;
+
     constructor(
-        public token?: string,
-        public type?: string
-    ) {}
+        token: string,
+        type: string
+    ) {
+        this.token = token;
+        this.type = type;
+    }
 }
 
 export class SoapData {
+    resultCode: number;
+    firstName: string;
+    lastName: string;
+    age: number;
+    profilePhoto: string;
+    video: string;
+
     constructor(
-        public resultCode?: number,
-        public firstName?: string,
-        public lastName?: string,
-        public age?: number,
-        public profilePhoto?: string,
-        public video?: string
-    ) {}
+        resultCode: number,
+        firstName: string,
+        lastName: string,
+        age: number,
+        profilePhoto: string,
+        video: string
+    ) {
+        this.resultCode = resultCode;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.profilePhoto = profilePhoto;
+        this.video = video;
+    }
 }

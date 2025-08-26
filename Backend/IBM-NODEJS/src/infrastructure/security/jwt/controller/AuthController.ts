@@ -12,6 +12,9 @@ export class AuthController {
             const authService = new AuthService();
             const response = await authService.authenticate(username, password);
             
+            // Verificar que la respuesta sea correcta
+            console.log('Respuesta de autenticación:', JSON.stringify(response, null, 2));
+            
             // Si llegamos aquí, la autenticación fue exitosa
             res.status(200).json(response);
         } catch (error) {

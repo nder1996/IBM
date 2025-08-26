@@ -35,7 +35,9 @@ export class AuthService {
         }
         
         // Usuario válido, generar token
+        console.log('Iniciando generación de token para el usuario:', username);
         const token = this.jwtUtil.generateToken(username);
+        console.log('Token generado:', token);
         
         // Convertir la ruta de la imagen a base64
         let profilePhotoBase64 = user.response.profilePhoto;
@@ -77,4 +79,4 @@ export class AuthService {
         );
     }
 }
-  
+
