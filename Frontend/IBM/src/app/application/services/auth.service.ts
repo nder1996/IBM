@@ -12,8 +12,9 @@ import { AuthResponse, TokenInfo } from '../dtos/response/auth.Response.dto';
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly API_URL = `${environment.apiUrl}/api/auth`; // Usar la URL completa del endpoint de autenticación
-
+  //private readonly API_URL = `${environment.apiUrl}/api/auth`; // Usar la URL completa del endpoint de autenticación
+  private readonly API_URL = '/api/auth';
+  
   constructor(
     private localStorageService: LocalStorageService,
     private http: HttpClient
@@ -36,7 +37,7 @@ export class AuthService {
             userInformation: response.data.user_information
           };
           console.log("login_response : " + JSON.stringify(login_response))
-          this.localStorageService.setItem(this.TOKEN_KEY,login_response);
+          this.localStorageService.setItem(this.TOKEN_KEY, login_response);
         }
         this.isAuthenticatedSubject.next(!!response.data.token);
       }),
