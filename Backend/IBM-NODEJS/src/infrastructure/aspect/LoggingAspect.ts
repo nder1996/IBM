@@ -1,25 +1,40 @@
-// src/infrastructure/aspect/LoggingAspect.ts - VERSIÓN ARREGLADA Y SIMPLE
 import 'reflect-metadata';
 
 /**
- * Decorador simple para logging
+ * Decorador mejorado que maneja tanto métodos síncronos como asíncronos
  */
 export function LogMethod() {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
         
-        descriptor.value = async function (...args: any[]) {
+        descriptor.value = function (...args: any[]) {
             const className = target.constructor.name;
             const methodName = propertyKey;
             
             console.log(`🚀 ${className}.${methodName} - INICIANDO`);
             
             try {
-                const result = await originalMethod.apply(this, args);
-                console.log(`✅ ${className}.${methodName} - COMPLETADO`);
-                return result;
+                const result = originalMethod.apply(this, args);
+                
+                // Verificar si el resultado es una Promise
+                if (result && typeof result.then === 'function') {
+                    // Método asíncrono - manejar con .then()
+                    return result
+                        .then((resolvedResult: any) => {
+                            console.log(`✅ ${className}.${methodName} - COMPLETADO (ASYNC)`);
+                            return resolvedResult;
+                        })
+                        .catch((error: any) => {
+                            console.error(`❌ ${className}.${methodName} - ERROR (ASYNC):`, error);
+                            throw error;
+                        });
+                } else {
+                    // Método síncrono - retornar directamente
+                    console.log(`✅ ${className}.${methodName} - COMPLETADO (SYNC)`);
+                    return result;
+                }
             } catch (error) {
-                console.error(`❌ ${className}.${methodName} - ERROR:`, error);
+                console.error(`❌ ${className}.${methodName} - ERROR (SYNC):`, error);
                 throw error;
             }
         };
@@ -49,7 +64,7 @@ export function LogClass() {
     };
 }
 
-// Decoradores específicos - AHORA SÍ FUNCIONAN
+// Decoradores específicos
 export const Service = () => LogClass();
 export const Controller = () => LogClass();
 export const Repository = () => LogClass();

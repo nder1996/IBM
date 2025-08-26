@@ -22,41 +22,24 @@ export class AuthService {
     }
 
     async authenticate(username: string, password: string): Promise<AuthResponse> {
-        // Validar entrada
         if (!username) {
             throw new BadRequestError("El nombre de usuario es requerido");
         }
-        
-        // Buscar el usuario usando el repositorio
         const user = await userRepository.findByUsername(username);
-
         if (!user) {
             throw new ResourceNotFoundError("Usuario", username);
         }
-        
-        // Usuario válido, generar token
         console.log('Iniciando generación de token para el usuario:', username);
         const token = this.jwtUtil.generateToken(username);
-        console.log('Token generado:', token);
-        
-        // Convertir la ruta de la imagen a base64
         let profilePhotoBase64 = user.response.profilePhoto;
-        
-        // Intentar convertir la imagen a base64 si es una ruta válida
         if (user.response.profilePhoto && !user.response.profilePhoto.startsWith('data:image')) {
-            // Construir la ruta completa al archivo
             const imagePath = path.join(process.cwd(), 'resources', 'images', path.basename(user.response.profilePhoto));
             const alternateImagePath = path.join(process.cwd(), 'src', 'infrastructure', 'resources', 'images', path.basename(user.response.profilePhoto));
-            
-            // Intentar convertir la imagen principal o la alternativa
             try {
-                // Usar el método asíncrono y esperar su resultado
                 let base64Data = await ImageBase64Service.convertImageToBase64Async(imagePath);
                 if (!base64Data) {
                     base64Data = await ImageBase64Service.convertImageToBase64Async(alternateImagePath);
                 }
-                
-                // Si se logró convertir, formatear como data URL
                 if (base64Data) {
                     const extension = path.extname(user.response.profilePhoto).substring(1) || 'png';
                     profilePhotoBase64 = `data:image/${extension};base64,${base64Data}`;
